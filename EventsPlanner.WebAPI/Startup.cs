@@ -122,6 +122,17 @@ namespace EventsPlanner.WebAPI
                         context.SaveChanges();
                     }
 
+                    if (context.Role.Any() && context.Role.FirstOrDefault(x=>x.RoleId == "Admin") == null)
+                    {
+                        context.Role.Add(new Role
+                        {
+                            RoleId = "Admin",
+                            RoleDescription = "Role Admin"
+                        });
+
+                        context.SaveChanges();
+                    }
+
                     if (!context.User.Any())
                     {
                         context.User.AddRange(new User
@@ -145,6 +156,22 @@ namespace EventsPlanner.WebAPI
                             Email = ""
                         }
                         );
+
+                        context.SaveChanges();
+                    }
+
+                    if (context.User.Any() && context.User.FirstOrDefault(x=>x.RoleId == "Admin") == null)
+                    {
+                        context.User.Add(new User
+                        {
+                            UserLogin = "admin",
+                            Name = "Admin",
+                            Lastname = "Admin",
+                            Password = "admin1234",
+                            RoleId = "Admin",
+                            Active = true,
+                            Email = ""
+                        });
 
                         context.SaveChanges();
                     }
